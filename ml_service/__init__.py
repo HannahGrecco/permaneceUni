@@ -1,0 +1,1 @@
+"""PermaneceUni inference service."""

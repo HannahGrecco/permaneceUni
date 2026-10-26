@@ -1,0 +1,47 @@
+@extends('layouts.app')
+
+@section('title', 'Visão geral')
+
+@section('content')
+@php($riskTotal = $highRiskCount + $mediumRiskCount + $lowRiskCount)
+<div class="flex flex-wrap items-end justify-between gap-5">
+    <div><p class="text-xs font-semibold uppercase tracking-[.16em] text-blue-700">Painel de permanência</p><h1 class="mt-2 text-3xl font-semibold tracking-tight text-[#142342] sm:text-[34px]">Visão geral</h1><p class="mt-2 text-sm text-slate-500">Sinais de permanência e acompanhamento dos estudantes da sua instituição.</p></div>
+    <a href="{{ route('imports.create') }}" class="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm shadow-blue-900/10 transition hover:bg-blue-700"><span class="text-base">＋</span> Importar base</a>
+</div>
+
+<section class="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+    @foreach ([['Estudantes acompanhados', $studentCount, 'Todos os registros da instituição', 'bg-blue-50 text-blue-700', '♙'], ['Alto risco', $highRiskCount, 'Requer atenção prioritária', 'bg-rose-50 text-rose-700', '↑'], ['Risco médio', $mediumRiskCount, 'Acompanhar de perto', 'bg-amber-50 text-amber-700', '◒'], ['Baixo risco', $lowRiskCount, 'Sem sinal elevado no momento', 'bg-emerald-50 text-emerald-700', '✓']] as [$label, $value, $hint, $color, $icon])
+        <article class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_2px_12px_rgba(15,23,42,.025)]"><div class="flex items-start justify-between"><p class="text-sm font-medium text-slate-500">{{ $label }}</p><span class="grid size-9 place-items-center rounded-xl {{ $color }}">{{ $icon }}</span></div><p class="mt-4 text-[30px] font-semibold leading-none tracking-tight text-[#142342]">{{ number_format($value, 0, ',', '.') }}</p><p class="mt-2 text-xs text-slate-400">{{ $hint }}</p></article>
+    @endforeach
+</section>
+
+<section class="mt-5 grid gap-5 xl:grid-cols-[minmax(0,1fr)_330px]">
+    <div class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_2px_12px_rgba(15,23,42,.025)] sm:p-6">
+        <div class="flex flex-wrap items-start justify-between gap-3"><div><h2 class="font-semibold text-[#142342]">Distribuição de risco</h2><p class="mt-1 text-xs text-slate-400">Classificação da previsão mais recente por estudante</p></div><span class="rounded-full bg-slate-50 px-3 py-1 text-xs font-medium text-slate-500">{{ number_format($riskTotal, 0, ',', '.') }} previsões</span></div>
+        <div class="mt-6 space-y-5">
+            @foreach ([['Alto', $highRiskCount, 'bg-rose-500', 'text-rose-700'], ['Médio', $mediumRiskCount, 'bg-amber-400', 'text-amber-700'], ['Baixo', $lowRiskCount, 'bg-emerald-500', 'text-emerald-700']] as [$label, $value, $bar, $text])
+                <div><div class="mb-2 flex items-center justify-between text-sm"><span class="font-medium text-slate-700">{{ $label }} risco</span><span class="font-semibold {{ $text }}">{{ number_format($value, 0, ',', '.') }} <span class="font-normal text-slate-400">· {{ $riskTotal ? number_format($value * 100 / $riskTotal, 1, ',', '.') : '0,0' }}%</span></span></div><div class="h-2 overflow-hidden rounded-full bg-slate-100"><div class="h-full rounded-full {{ $bar }} transition-all" style="width: {{ $riskTotal ? ($value * 100 / $riskTotal) : 0 }}%"></div></div></div>
+            @endforeach
+        </div>
+    </div>
+    <div class="flex flex-col justify-between rounded-2xl bg-[#142342] p-6 text-white shadow-sm"><div><span class="grid size-10 place-items-center rounded-xl bg-white/10 text-lg">✓</span><p class="mt-5 text-xs font-medium uppercase tracking-[.14em] text-blue-200">Plano de acompanhamento</p><h2 class="mt-2 text-xl font-semibold">Atenção também é presença.</h2><p class="mt-2 text-sm leading-6 text-slate-300">Registre ações e acompanhe cada contato com o estudante ao longo do tempo.</p></div><div class="mt-6 flex items-center justify-between border-t border-white/10 pt-4"><div><p class="text-xs text-slate-400">Em aberto</p><p class="mt-1 text-2xl font-semibold">{{ number_format($openInterventionCount, 0, ',', '.') }}</p></div><a href="{{ route('interventions.index') }}" class="rounded-lg bg-white/10 px-3 py-2 text-xs font-semibold text-white hover:bg-white/15">Ver intervenções →</a></div></div>
+</section>
+
+<section class="mt-6 overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-[0_2px_12px_rgba(15,23,42,.025)]">
+    <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 px-5 py-5 sm:px-6"><div><h2 class="font-semibold text-[#142342]">Estudantes que precisam de acompanhamento</h2><p class="mt-1 text-xs text-slate-400">Priorize uma conversa de apoio; a previsão não determina uma causa individual.</p></div><a href="{{ route('students.index') }}" class="text-sm font-semibold text-blue-700 hover:text-blue-800">Ver todos os estudantes →</a></div>
+    <form method="GET" action="{{ route('dashboard') }}" class="grid gap-3 border-b border-slate-100 bg-slate-50/60 p-4 sm:grid-cols-[1fr_190px_auto_auto] sm:px-6">
+        <label class="relative"><span class="sr-only">Buscar estudante</span><span class="pointer-events-none absolute left-3 top-2.5 text-slate-400">⌕</span><input name="search" value="{{ request('search') }}" placeholder="Buscar por estudante ou registro" class="w-full rounded-lg border border-slate-200 bg-white py-2.5 pl-9 pr-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100"></label>
+        <label><span class="sr-only">Nível de risco</span><select name="risk" class="w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-600 outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"><option value="">Todos os níveis</option><option value="high" @selected(request('risk') === 'high')>Alto risco</option><option value="medium" @selected(request('risk') === 'medium')>Risco médio</option><option value="low" @selected(request('risk') === 'low')>Baixo risco</option></select></label>
+        <button class="rounded-lg bg-[#142342] px-4 py-2.5 text-sm font-semibold text-white hover:bg-[#20365f]">Filtrar</button><a href="{{ route('dashboard') }}" class="rounded-lg border border-slate-200 bg-white px-4 py-2.5 text-center text-sm font-semibold text-slate-600 hover:bg-slate-50">Limpar</a>
+    </form>
+    @if ($riskStudents->isEmpty())<div class="px-5 py-14 text-center"><span class="mx-auto grid size-12 place-items-center rounded-2xl bg-slate-100 text-xl text-slate-400">⌕</span><p class="mt-4 font-semibold text-slate-700">Nenhum estudante encontrado</p><p class="mt-1 text-sm text-slate-400">Ajuste os filtros ou importe uma base acadêmica.</p></div>
+    @else
+        <div class="overflow-x-auto"><table class="min-w-full divide-y divide-slate-100 text-sm"><thead class="bg-white text-left text-[10px] font-semibold uppercase tracking-[.13em] text-slate-400"><tr><th class="px-5 py-3.5 sm:px-6">Estudante</th><th class="px-4 py-3.5">Curso</th><th class="px-4 py-3.5">Score de risco</th><th class="px-4 py-3.5">Classificação</th><th class="px-4 py-3.5">Fator que eleva o score</th><th class="px-5 py-3.5 sm:px-6"></th></tr></thead><tbody class="divide-y divide-slate-50">
+            @foreach ($riskStudents as $student)
+                @php($level = $student->latestPrediction?->risk_level)
+                <tr class="transition hover:bg-slate-50/80"><td class="whitespace-nowrap px-5 py-4 sm:px-6"><div class="flex items-center gap-3"><span class="grid size-9 place-items-center rounded-full bg-blue-50 text-xs font-semibold text-blue-700">{{ mb_substr($student->name ?: $student->external_id, 0, 1) }}</span><div><a href="{{ route('students.show', $student) }}" class="font-semibold text-[#142342] hover:text-blue-700">{{ $student->name ?: $student->external_id }}</a><p class="mt-0.5 text-xs text-slate-400">{{ $student->external_id }}</p></div></div></td><td class="whitespace-nowrap px-4 py-4 text-slate-500">{{ $student->course_code ?? '—' }}</td><td class="whitespace-nowrap px-4 py-4 font-semibold text-slate-700">{{ $student->latestPrediction ? number_format((float) $student->latestPrediction->risk_score, 1, ',', '.').'%' : '—' }}</td><td class="whitespace-nowrap px-4 py-4"><span class="inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-semibold {{ match ($level) { 'high' => 'bg-rose-50 text-rose-700', 'medium' => 'bg-amber-50 text-amber-700', 'low' => 'bg-emerald-50 text-emerald-700', default => 'bg-slate-100 text-slate-600' } }}"><span class="size-1.5 rounded-full {{ match ($level) { 'high' => 'bg-rose-500', 'medium' => 'bg-amber-400', 'low' => 'bg-emerald-500', default => 'bg-slate-400' } }}"></span>{{ match ($level) { 'high' => 'Alto', 'medium' => 'Médio', 'low' => 'Baixo', default => 'Pendente' } }}</span></td><td class="min-w-48 px-4 py-4 text-xs text-slate-500">{{ $student->top_risk_factor }}</td><td class="whitespace-nowrap px-5 py-4 text-right sm:px-6"><a href="{{ route('students.show', $student) }}" class="font-semibold text-blue-700 hover:text-blue-900">Perfil <span aria-hidden="true">→</span></a></td></tr>
+            @endforeach
+        </tbody></table></div><p class="border-t border-slate-100 px-5 py-3 text-[11px] leading-5 text-slate-400">O fator exibido contribui para o score do modelo e não representa uma causa comprovada.</p><div class="border-t border-slate-100 px-5 py-4 sm:px-6">{{ $riskStudents->links() }}</div>
+    @endif
+</section>
+@endsection

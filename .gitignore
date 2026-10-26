@@ -1,0 +1,5 @@
+ml_service/artifacts/*.joblib
+ml_service/artifacts/metrics.json
+.venv/
+__pycache__/
+*.py[cod]

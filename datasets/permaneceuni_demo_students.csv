@@ -1,0 +1,19 @@
+﻿Course,Daytime/evening attendance,Admission grade,Educational special needs,Debtor,Tuition fees up to date,Gender,Scholarship holder,Age at enrollment,Curricular units 1st sem (enrolled),Curricular units 1st sem (evaluations),Curricular units 1st sem (approved),Curricular units 1st sem (grade),Curricular units 1st sem (without evaluations),Curricular units 2nd sem (enrolled),Curricular units 2nd sem (evaluations),Curricular units 2nd sem (approved),Curricular units 2nd sem (grade),Curricular units 2nd sem (without evaluations),Student name,Student registration,target
+9500,1,133.5,0,0,1,0,1,24,17,29,14,12.5625,4,7,0,0,0.0,0,Ana Clara Costa,2026.1.00481,Dropout
+9853,1,127.3,0,0,1,0,0,24,5,6,0,0.0,0,5,5,0,0.0,0,Beatriz Almeida,2026.1.00482,Dropout
+9556,1,139.0,0,0,1,0,0,18,6,9,6,13.83333333,0,0,0,0,0.0,0,Camila Ferreira,2026.1.00483,Graduate
+9500,1,126.5,0,0,1,0,0,27,6,6,6,12.83333333,0,6,0,0,0.0,0,Daniela Martins,2026.1.00484,Enrolled
+9773,1,120.0,0,0,1,1,1,20,8,8,7,12.66571429,0,6,0,0,0.0,0,Arthur Oliveira,2026.1.00485,Enrolled
+9773,1,125.2,0,0,1,1,0,34,8,8,8,13.76375,0,5,10,0,0.0,3,Bruno Santos,2026.1.00486,Graduate
+9853,1,123.4,0,1,1,0,1,23,11,13,11,15.69230769,0,8,8,8,13.22,0,Elisa Rodrigues,2026.1.00487,Graduate
+9070,1,111.6,0,0,0,0,1,18,4,4,4,13.875,0,8,8,8,13.0625,0,Fernanda Lima,2026.1.00488,Dropout
+9500,1,130.2,0,0,1,0,0,18,6,7,6,15.85714286,0,6,8,5,12.2,0,Gabriela Souza,2026.1.00489,Graduate
+9119,1,122.5,0,0,1,0,0,47,5,9,5,11.83333333,0,6,6,6,16.66666667,0,Helena Carvalho,2026.1.00490,Enrolled
+9070,1,120.0,0,0,1,0,0,24,6,8,6,12.625,0,6,11,3,12.0,0,Isabela Rocha,2026.1.00491,Graduate
+9003,1,128.0,0,1,1,0,0,20,5,5,0,0.0,0,11,11,4,12.0,0,Ana Clara Costa,2026.1.00492,Enrolled
+9773,1,122.5,0,0,1,0,1,50,6,13,6,12.0,0,5,9,3,13.25,0,Beatriz Almeida,2026.1.00493,Graduate
+9003,1,119.4,0,0,1,0,1,20,6,14,1,10.0,0,5,7,3,10.5,0,Camila Ferreira,2026.1.00494,Enrolled
+9500,1,126.7,0,0,1,0,0,29,6,12,4,12.75,0,6,8,5,12.8,0,Daniela Martins,2026.1.00495,Dropout
+9085,0,113.0,0,0,1,0,1,18,6,14,5,11.0,0,5,9,1,11.0,4,Elisa Rodrigues,2026.1.00496,Dropout
+9853,1,134.8,0,1,1,0,0,18,7,12,4,10.25,0,6,10,3,13.0,0,Fernanda Lima,2026.1.00497,Dropout
+9500,1,112.3,0,0,1,1,0,21,7,7,7,12.90142857,0,6,6,6,13.5,0,Caio Ribeiro,2026.1.00498,Enrolled
